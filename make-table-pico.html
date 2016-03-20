@@ -1,94 +1,40 @@
 <!doctype html>
 <html lang="en">
-<head>
-<meta charset="utf-8">
-<title>PubMed xml to table PICO</title>
-<link rel="stylesheet" href="/openmetaanalysis.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<!-- Optional Bootstrap theme -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
-
-<style type="text/css" media="screen">
-#editor { 
-  position: relative;
-  border-style:solid;
-  border-width:medium;
-}
-
-#menu
-{
-list-style-type:none;
-margin:0;
-padding:0;
-overflow:hidden;
-} 
-
-.listitem
-{
-display:inline;
-float:left;
-}
-
-a.menuitem:link,a.menuitem:visited
-{
-display:block;
-width:150px;
-font-weight:bold;
-text-align:center;
-padding:4px;
-text-decoration:none;background-color:#6DC6E7;
-color:#FFFFFF;
-}
-
-a.menuitem:hover,a.menuitem:active
-{
-background-color:#0022B4;
-color:#FFFFFF;
-}
-
-.tooltiptext{
-	display: none;
-}
-.ToolTipClass{
-color:black;
-border-color:#0022B4;
-background-color: #6DC6E7
-}
-
-</style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <title>PubMed xml to table PICO</title>
+    <link rel="stylesheet" href="/openmetaanalysis.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
-  <script src="assets/js/citations.js"></script>
-</head>
-
-<body>
-<div class="wrapper">
-
-<div class="page-header">
-      <div style="color:#0022B4">
-		<h1>openMetaAnalysis: <span style="font-size:50%">collaborative and continuous</span></h1>
-	</div>
-	
-	<ul id="menu">
-	<li class="listitem"><a href="http://openmetaanalysis.github.io/" class="menuitem">Home</a></li>
-	<li class="listitem"><a href="https://public.opencpu.org/ocpu/github/openMetaAnalysis/home/www/editor.html" class="menuitem">Editor</a></li>
-	<li class="listitem"><a href="https://public.opencpu.org/ocpu/github/openMetaAnalysis/home/www/arrows.html" class="menuitem">Arrows Plot</a></li>
-	<li class="listitem"><a href="http://openmetaanalysis.github.io/methods.html" class="menuitem">Methods</a></li>
-	<li class="listitem"><a href="http://openmetaanalysis.github.io/contribute.html" class="menuitem">Get involved</a></li>
-	</ul> 
-</div>
-
-<h2>Make tables</h2>
-
-<input id="input" type="text" autocomplete="on" size="100" placeholder="Enter search terms or a list of PMIDs separated by spaces, commas, or semi-colons"><br/>
-<button id="submitbutton" type="button">Submit</button>
-<fieldset>
-<legend style="font-weight:bold">Meta-analysis type</legend>
-<div><input name="type" class="type" value="diagnosis" id="type_diagnosis" type="radio"><label for="type_diagnosis">Meta-analysis of diagnostic test assessments (DTAs)</label></div>
-<div><input name="type" class="type" value="intervention" id="type_intervention" type="radio" ><label for="type_intervention">Meta-analysis of randomized controlled trials (RCTs)</label></div>	
-</fieldset>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+    <script src="assets/js/citations.js"></script>
+    <script src="assets/js/search_pubmed.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="page-header">
+        <h1>openMetaAnalysis:
+          <span style="font-size:50%">collaborative and continuous</span>
+        </h1>
+	    </div>
+	    <ul id="menu">
+	      <li class="listitem"><a href="http://openmetaanalysis.github.io/" class="menuitem">Home</a></li>
+	      <li class="listitem"><a href="https://public.opencpu.org/ocpu/github/openMetaAnalysis/home/www/editor.html" class="menuitem">Editor</a></li>
+	      <li class="listitem"><a href="https://public.opencpu.org/ocpu/github/openMetaAnalysis/home/www/arrows.html" class="menuitem">Arrows Plot</a></li>
+	      <li class="listitem"><a href="http://openmetaanalysis.github.io/methods.html" class="menuitem">Methods</a></li>
+	      <li class="listitem"><a href="http://openmetaanalysis.github.io/contribute.html" class="menuitem">Get involved</a></li>
+	    </ul> 
+    </div>
+    <div id="flash"></div>
+    <h2>Make tables</h2>
+    <input id="input" type="text" autocomplete="on" size="100" placeholder="Enter search terms or a list of PMIDs separated by spaces, commas, or semi-colons"><br/>
+    <button id="submitbutton" type="button">Submit</button>
+    <fieldset>
+      <legend style="font-weight:bold">Meta-analysis type</legend>
+      <div><input name="type" class="type" value="diagnosis" id="type_diagnosis" type="radio"><label for="type_diagnosis">Meta-analysis of diagnostic test assessments (DTAs)</label></div>
+      <div><input name="type" class="type" value="intervention" id="type_intervention" type="radio" ><label for="type_intervention">Meta-analysis of randomized controlled trials (RCTs)</label></div>	
+    </fieldset>
 
 <fieldset id="labels" style="display:none">
 <legend style="font-weight:bold">Prepopulate fields that are similar between studies?</legend>
@@ -110,27 +56,24 @@ background-color: #6DC6E7
 <li id="criteria">&nbsp;</li>
 <li id="explanations">For important clinical observations that may explain a study's results, consider surrounding the text with **<span style="background-color:yellow;">to make a yellow highlight</span>**.</li>
 </ul>
-<div id="editor">Please wait for code to be written here.</div>
-
-<script>
-//For gh-pages
-//Page history and edit
-var pagename = location.pathname.split('/').slice(-1);
-if (pagename.toString().length < 1){pagename = "index.html"}
-document.write("<div style='text-align:center'><a href='https://github.com/openMetaAnalysis/openMetaAnalysis.github.io/blob/master/" + pagename + "'>Edit this page</a> - <a href='https://github.com/openMetaAnalysis/openMetaAnalysis.github.io/commits/master/" + pagename + "'>Page history</a></div>")
-</script>
-
-</div>
-
-              <script type="text/javascript">
-            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
-            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
-          </script>
-          <script type="text/javascript">
-            try {
-              var pageTracker = _gat._getTracker("UA-56740469-1");
-            pageTracker._trackPageview();
-            } catch(err) {}
-          </script>
+  <div id="editor">Please wait for code to be written here.</div>
+    <script>
+    //For gh-pages
+    //Page history and edit
+    var pagename = location.pathname.split('/').slice(-1);
+    if (pagename.toString().length < 1){pagename = "index.html"}
+    document.write("<div style='text-align:center'><a href='https://github.com/openMetaAnalysis/openMetaAnalysis.github.io/blob/master/" + pagename + "'>Edit this page</a> - <a href='https://github.com/openMetaAnalysis/openMetaAnalysis.github.io/commits/master/" + pagename + "'>Page history</a></div>")
+    </script>
+  </div>
+    <script type="text/javascript">
+      var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+      document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+    </script>
+    <script type="text/javascript">
+      try {
+        var pageTracker = _gat._getTracker("UA-56740469-1");
+      pageTracker._trackPageview();
+      } catch(err) {}
+    </script>
   </body>
 </html>
