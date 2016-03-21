@@ -1,7 +1,24 @@
+#citation-select label {
+  display: block;
+}
+
+#citation-select label div.article-title {
+  display: inline-block;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+#citation-select label span:after {
+  content: '. ';
+}
+
+#citation-select label input:after {
+  content: ' ';
+}
+
 #editor { 
   position: relative;
-  border-style:solid;
-  border-width:medium;
 }
 
 #menu {

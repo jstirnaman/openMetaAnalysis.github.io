@@ -1,44 +1,60 @@
   function citations(publist, processed) {
+    //processed.citationsSelect = []
+    //processed.citationsPico = []
+    processed.citationsMarkdown = []
     publist["uids"].forEach(function(uid) {
-      processed.push(formatCitation(publist[uid]));
+    //  processed.citationsSelect.push(citationSelect(publist[uid]));
+    //  processed.citationsPico.push(citationPico(publist[uid]));
+      processed.citationsMarkdown.push(citationMarkdown(publist[uid]));
     });
     return processed;
   }
 
-  function studyTypeTips() {
-  $(".type").on("click", function(){
-    $("#labels").show()
-    if ($("#type_intervention").is(":checked")){
-      $("#box0label").html('Enter study design')
-      $("#box0").attr("placeholder", "Enter randomized controlled trial?")
-      $("#box1label").html('Patients')
-      $("#box1").attr("placeholder", "Enter the condition being studied")
-      $("#box2label").html('Intervention')
-      $("#box2").attr("placeholder", "Enter the intervention being studied")
-      $("#box3label").html('Comparison')
-      $("#box3").attr("placeholder", "Enter placebo?")
-      $("#box4label").html('Outcome')
-      $("#box4").attr("placeholder", "Enter the primary outcome being studied (your can add secondaires later)")
+  function citationMarkdown(publication) {
+    var studyname = publication.authors.slice(0,3)
+          .map(function(a) { return a.name.split(' ')[0] }).join(', ')
+    var pubyear = publication.pubdate
+    if (pubyear.indexOf(" ") > 1) {
+      pubyear = pubyear.substring(0, pubyear.indexOf(" "));
     }
-    if ($("#type_diagnosis").is(":checked")){
-      $("#box0label").html('Enter study design')
-      $("#box0").attr("placeholder", "Enter cross sectional study (be careful of case-control)?")
-      $("#box1label").html('Patients')
-      $("#box1").attr("placeholder", "Enter sndrome or condition being studied")
-      $("#box2label").html('Index test')
-      $("#box2").attr("placeholder", "Enter the index test (test/symptom/sign) being studied")
-      $("#box3label").html('Reference test')
-      $("#box3").attr("placeholder", "Enter the reference ('gold standard') test")
-      $("#box4label").html('Flow and timing')
-      $("#box4").attr("placeholder", "Enter something like 'index preceded reference test by x to x days'")
-    }
-  });
+    publication.markdown = "#study\n" +
+                 "##citation:\n" +
+                  "*year=" + pubyear + "\n" +
+                  "* pmid=" + publication.uid + "\n" +
+                  "trialregistration" +
+                  "journal_abbrev=" + publication.source +
+                  "studyname" + studyname
+    return publication;
   }
 
-  function formatCitation(publication) {
-    var citation = "<span style='color:red;font-weight:bold'>&lt;!-- start of a new study --&gt;<br>";
-    var studyname = publication.authors[0].name;
-    studyname = studyname.substring(0, studyname.indexOf(" "));
+  function citationSelect(publication) {
+    var authlist = publication.authors.slice(0,3)
+          .map( function(a) { return a.name.split(' ')[0] }).join(', ')
+    var authors = $('<span/>').addClass('authors')
+          .text(authlist)
+    var title = publication.title.trim().replace(/\.$/, '')
+    if (title.length > 60) { title = title.substr(0, 60).trim().concat('..') }
+    var title_el = $('<span/>').addClass('title').text(title)
+    var pubyear = $('<span/>').addClass('pubyear').text(publication.pubdate)
+    var src = $('<span/>').addClass('source').text(publication.source)
+    var uid = $('<span/>').addClass('title').text(publication.uid)
+    return $("<label/>").attr('id', "select_" + publication.uid)
+             .append(authors)
+             .append(pubyear)
+             .append(title_el)
+             .append(src)
+             .append(uid)
+             .prepend(
+               $("<input/>")
+                 .attr("value", publication.uid)
+                 .attr("type", "checkbox")
+             )
+  }
+
+  function citationPico(publication) {
+    var citation = "!-- start of a new study --";
+    var studyname = publication.authors.slice(0,3)
+          .map(function(a) { return a.name.split(' ')[0] }).join(', ')
     var pubyear = publication.pubdate
   
     if (pubyear.indexOf(" ") > 1) {
@@ -95,3 +111,34 @@
     }
     return citation += "&lt;/study&gt;<br>"
   }
+
+  function studyTypeTips() {
+  $(".type").on("click", function(){
+    $("#labels").show()
+    if ($("#type_intervention").is(":checked")){
+      $("#box0label").html('Enter study design')
+      $("#box0").attr("placeholder", "Enter randomized controlled trial?")
+      $("#box1label").html('Patients')
+      $("#box1").attr("placeholder", "Enter the condition being studied")
+      $("#box2label").html('Intervention')
+      $("#box2").attr("placeholder", "Enter the intervention being studied")
+      $("#box3label").html('Comparison')
+      $("#box3").attr("placeholder", "Enter placebo?")
+      $("#box4label").html('Outcome')
+      $("#box4").attr("placeholder", "Enter the primary outcome being studied (your can add secondaires later)")
+    }
+    if ($("#type_diagnosis").is(":checked")){
+      $("#box0label").html('Enter study design')
+      $("#box0").attr("placeholder", "Enter cross sectional study (be careful of case-control)?")
+      $("#box1label").html('Patients')
+      $("#box1").attr("placeholder", "Enter sndrome or condition being studied")
+      $("#box2label").html('Index test')
+      $("#box2").attr("placeholder", "Enter the index test (test/symptom/sign) being studied")
+      $("#box3label").html('Reference test')
+      $("#box3").attr("placeholder", "Enter the reference ('gold standard') test")
+      $("#box4label").html('Flow and timing')
+      $("#box4").attr("placeholder", "Enter something like 'index preceded reference test by x to x days'")
+    }
+  });
+  }
+
