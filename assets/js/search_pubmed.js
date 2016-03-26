@@ -36,7 +36,7 @@ $(document).ready(function(){
               var editor = $("#pico-editor").clone()
                 .attr('id', elem_id)
               $(editor).appendTo("#pico-studies")
-              $('#'+elem_id ".editor .editor-text").val(cite.markdown)
+              $('#'+elem_id + ' .editor .editor-text').val(cite.markdown)
               $('#'+elem_id).show()
           })
         }
