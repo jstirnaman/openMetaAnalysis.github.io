@@ -1,0 +1,29 @@
+{
+  "name": "openmetaanalysis",
+  "description": "OpenMetaAnalysis, reviews collaborative and continuous",
+  "main": "ace.js",
+  "authors": [
+    "Robert Badgett",
+    "Jason Stirnaman"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "meta-analysis",
+    "clinical",
+    "reviews"
+  ],
+  "homepage": "https://github.com/openMetaAnalysis/openMetaAnalysis.github.io",
+  "moduleType": [],
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "bootstrap": "^3.3.6",
+    "marked": "^0.3.5"
+  }
+}

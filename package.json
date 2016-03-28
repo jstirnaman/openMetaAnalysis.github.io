@@ -4,11 +4,8 @@
   "description": "OpenMetaAnalysis, reviews collaborative and continuous",
   "main": "ace.js",
   "dependencies": {
-    "grunt": "^0.4.5",
-    "marked": "^0.3.5"
   },
   "devDependencies": {
-    "grunt": "^0.4.5"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
