@@ -29,7 +29,7 @@
 	    </ul> 
     <div id="flash"></div>
     <h2>Make tables</h2>
-    <input id="input" type="text" autocomplete="on" size="100" placeholder="Enter search terms or a list of PMIDs separated by spaces, commas, or semi-colons"><br/>
+    <input id="input" type="text" autocomplete="on" size="100" placeholder="Enter search terms or PMIDs separated by spaces, commas, or semi-colons, e.g. 27016673, 27016594"><br/>
     <button id="submitbutton" type="button">Submit</button>
     <fieldset>
       <legend style="font-weight:bold">Meta-analysis type</legend>
@@ -68,8 +68,7 @@
     </div>
     
     <h3>PICO table</h3>
-    <div>Copy the content below into the appropriate file for topic. Then replace text that is highlighted in yellow. Add text relevant to the criteria below:
-    </div>
+    <div>Add or remove information below as needed then select the checkbox to include it in the table</div>
     <ul id="hints" style="display:none">
       <li id="bullets">If a bullet is not needed, delete its entire row.</li>
       <li id="criteria">&nbsp;</li>
@@ -109,7 +108,7 @@
 <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="assets/js/jquery-markdown/jquery-markdown.js"></script>
-    <script type="text/javascript" src="node_modules/marked/lib/marked.js"></script>
+    <script type="text/javascript" src="bower_components/marked/marked.min.js"></script>
     <script type="text/javascript" src="assets/js/citations.js"></script>
     <script type="text/javascript" src="assets/js/search_pubmed.js"></script>
     <script type="text/javascript">

@@ -31,13 +31,18 @@
     if (pubyear.indexOf(" ") > 1) {
       pubyear = pubyear.substring(0, pubyear.indexOf(" "));
     }
-    publication.markdown = "#study\n" +
-                 "##citation:\n" +
-                  "*year=" + pubyear + "\n" +
-                  "* pmid=" + publication.uid + "\n" +
-                  "trialregistration" +
-                  "journal_abbrev=" + publication.source +
-                  "studyname" + studyname
+    publication.markdown = "# Study\n" +
+                 "## Citation:\n" +
+                  "* Year=" + pubyear + "\n" +
+                  "* PMID=" + publication.uid + "\n" +
+                  "* trialregistration" +
+                  "* Journal_abbrev=" + publication.source + "\n" + 
+                  "* Studyname=" + studyname + "\n" + 
+                  "* Sample GMF table input:\n\n" + 
+                  "| First Header  | Second Header |\n" +
+                  "| ------------- | ------------- |\n" +
+                  "| Content Cell  | Content Cell  |\n" +
+                  "| Content Cell  | Content Cell  |\n"
     return publication;
   }
 
