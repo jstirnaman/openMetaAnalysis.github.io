@@ -74,36 +74,44 @@
       <li id="bullets">If a bullet is not needed, delete its entire row.</li>
       <li id="criteria">&nbsp;</li>
       <li id="explanations">For important clinical observations that may explain a study's results, consider surrounding the text with **<span style="background-color:yellow;">to make a yellow highlight</span>**.</li>
+      <li>Tables can be formatted using Github-flavored Markdown (GFM). <a href="https://help.github.com/articles/organizing-information-with-tables/">See Github Help for tables</a>.
+      </li>
     </ul>
-    <div id="pico-studies">
+    <div id="pico-table"></div>
+    <form id="pico-studies">
       <div id="pico-editor" class="pico-editor" style="display: none">
+      <label class="editor-chk">
+        <input type="checkbox"></input>
+      </label>
         <div class="editor form-group">
           <div class="editor-controls">
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdBold()">Bold</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdItalic()">Italic</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 1})">H1</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 2})">H2</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 3})">H3</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 4})">H4</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdLink({default_url: prompt('Enter URL please')})">Link</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdImage({default_image_url: prompt('Enter URL Please')})">Image</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdQuote()">Quote</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdCode()">Code</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdNumberedList()">Numbered List</button>
-            <button onClick="$(this).parents('.editor').children('.editor-text').mdBulletList()">Bullet List</button>
-          </div>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdBold()">Bold</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdItalic()">Italic</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 1})">H1</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 2})">H2</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 3})">H3</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdHeader({number: 4})">H4</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdLink({default_url: prompt('Enter URL please')})">Link</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdImage({default_image_url: prompt('Enter URL Please')})">Image</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdQuote()">Quote</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdCode()">Code</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdNumberedList()">Numbered List</button>
+            <button type="button" onClick="$(this).parents('.editor').children('.editor-text').mdBulletList()">Bullet List</button>
+          </div><!-- editor-controls -->
           <textarea rows="8" cols="90" class="editor-text"></textarea>
-        </div>
-      </div>
+        </div><!-- editor -->
     </div>
+      <button type="button" form="pico-studies" id="submit-md" onClick="toPicoTable($(this).parent('#pico-studies'))">Create Table</button>
+  </form><!-- pico-studies -->
       <footer></footer>
     </div> <!-- wrapper -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
 <!-- Latest compiled and minified JavaScript -->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <script src="assets/js/jquery-markdown/jquery-markdown.js"></script>
-    <script src="assets/js/citations.js"></script>
-    <script src="assets/js/search_pubmed.js"></script>
+    <script type="text/javascript" src="node_modules/marked/lib/marked.js"></script>
+    <script type="text/javascript" src="assets/js/citations.js"></script>
+    <script type="text/javascript" src="assets/js/search_pubmed.js"></script>
     <script type="text/javascript">
       var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
       document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));

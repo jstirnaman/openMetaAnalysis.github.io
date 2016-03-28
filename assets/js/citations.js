@@ -1,3 +1,17 @@
+  function toPicoTable(studies) {
+    studies.children('.pico-editor')
+      .each(function(i, e) {
+        if ($(e).find('.editor-chk input').prop('checked')) {
+          $('#pico-table')
+            .append(
+              marked(
+                $(e).find('.editor-text').val()
+              )
+            )
+        }
+    })
+  } 
+
   function citations(publist, processed) {
     //processed.citationsSelect = []
     //processed.citationsPico = []
