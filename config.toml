@@ -2,7 +2,6 @@ baseURL = "http://jstirnaman.github.io/"
 languageCode = "en-us"
 title = "OpenMetaAnalysis"
 theme = "beautifulhugo"
-baseurl = "https://jstirnaman.github.io"
 DefaultContentLanguage = "en"
 #DefaultContentLanguage = "ja"
 metaDataFormat = "yaml"
@@ -10,7 +9,9 @@ pygmentsUseClasses = true
 pygmentCodeFences = true
 #disqusShortname = "XXX"
 #googleAnalytics = "XXX"
-publishDir = "docs"
+contentDir = "content"
+layoutDir = "layouts"
+publishDir = "public"
 
 [Params]
   subtitle = "Collaborative and continuous meta-analysis"
