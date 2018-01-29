@@ -1,0 +1,122 @@
+#citation-select label {
+  display: block;
+}
+
+#citation-select label div.article-title {
+  display: inline-block;
+  width: 50px;
+  overflow: hidden;
+  text-overflow: ellipsis;  
+}
+
+#citation-select label span:after {
+  content: '. ';
+}
+
+#citation-select label input:after {
+  content: ' ';
+}
+
+#editor { 
+  position: relative;
+}
+
+#menu {
+list-style-type:none;
+margin:0;
+padding:0;
+overflow:hidden;
+} 
+
+.listitem {
+display:inline;
+float:left;
+}
+
+a.menuitem:link,a.menuitem:visited {
+display:block;
+width:150px;
+font-weight:bold;
+text-align:center;
+padding:4px;
+text-decoration:none;background-color:#6DC6E7;
+color:#FFFFFF;
+}
+
+a.menuitem:hover,a.menuitem:active {
+  background-color:#0022B4;
+  color:#FFFFFF;
+}
+
+.tooltiptext {
+  display: none;
+}
+.ToolTipClass{
+color:black;
+border-color:#0022B4;
+background-color: #6DC6E7
+}
+.wrapper
+{
+width: 860px;
+margin-top: 0px;
+margin-right: auto;
+margin-bottom: 0px;
+margin-left: auto;
+}
+.pmid {
+	text-decoration:underline;
+	color: #0000EE;
+}
+.pmid:hover {
+	cursor: pointer;
+}
+.pmid:visited {
+	color: #551A8B;
+}
+.body_panel
+{
+display:inline-block;
+width:100%;
+overflow-y:scroll;
+}
+table{
+	width:100%;
+}
+table, td, th{
+	vertical-align:top;
+	border-style: solid;
+	border-width: 1px;
+	border-collapse: collapse;
+	padding:5px;
+	margin:5px;
+}
+td, th{
+	width:100px;
+}
+th{
+	background-color:lightgray;
+}
+.col1{
+	width:100px;
+	max-width:100px;
+}
+caption{
+	font-weight:bold;
+	font-size:130%;
+}
+.tip{
+padding:10px;	
+}
+@media print {
+	.body_panel{
+		height:auto;
+		page-break-after: avoid;
+		}
+}
+@media screen {
+	.body_panel{
+		height:400px;
+		page-break-after: avoid;
+		}
+}

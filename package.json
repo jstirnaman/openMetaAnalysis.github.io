@@ -1,0 +1,28 @@
+{
+  "name": "openmetaanalysis",
+  "version": "1.0.0",
+  "description": "OpenMetaAnalysis, reviews collaborative and continuous",
+  "main": "ace.js",
+  "dependencies": {
+  },
+  "devDependencies": {
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/openMetaAnalysis/openMetaAnalysis.github.io.git"
+  },
+  "keywords": [
+    "meta-analysis",
+    "clinical",
+    "reviews"
+  ],
+  "author": "Robert Badgett, Jason Stirnaman",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/openMetaAnalysis/openMetaAnalysis.github.io/issues"
+  },
+  "homepage": "https://github.com/openMetaAnalysis/openMetaAnalysis.github.io#readme"
+}
