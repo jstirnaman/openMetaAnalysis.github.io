@@ -11,7 +11,7 @@ pygmentCodeFences = true
 #googleAnalytics = "XXX"
 contentDir = "content"
 layoutDir = "layouts"
-publishDir = "docs"
+publishDir = "public"
 
 [Params]
   subtitle = "Collaborative and continuous meta-analysis"
