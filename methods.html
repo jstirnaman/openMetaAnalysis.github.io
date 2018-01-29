@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>openMetaAnalysis</title>
+<title>openMetaAnalysis: methods</title>
+<meta name="author" content="openMetaAnalysis Contributors">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
@@ -54,10 +55,16 @@ $(document).ready(function(){
 		sd = width/4;
 		}
 	if ($("#median").val() != ''){
-		//Hozo, 2005 PMID 15840177
 		median = parseFloat($("#median").val())
 		if ($("#median").val() != '' && $("#range").is(':checked')){
+			// Hozo, 2005 PMID 15840177: equation 4
 			var mean = (parseFloat($("#lower").val()) + 2*median + parseFloat($("#upper").val()) )/4 + (parseFloat($("#lower").val()) - 2*median + parseFloat($("#upper").val()) )/(4*subjects)
+			mean = mean.toFixed(2).toString();
+			$("#answer_mean").html(mean);
+			}
+		else if ($("#median").val() != '' && $("#iqr").is(':checked')){
+			// Wan, 2014 PMID 25524443: equation 14
+			var mean = (parseFloat($("#lower").val()) + median + parseFloat($("#upper").val()) )/3
 			mean = mean.toFixed(2).toString();
 			$("#answer_mean").html(mean);
 			}
@@ -210,7 +217,8 @@ http://code.google.com/p/jquery-csv/wiki/API -> instructions
 	</ul>
 </li>
 <li class="listitem"><a href="http://openmetaanalysis.github.io/methods.html" class="menuitem">Methods</a></li>
-<li class="listitem"><a href="http://openmetaanalysis.github.io/contribute.html" class="menuitem">Get involved</a></li>
+<li class="listitem"><a href="http://openmetaanalysis.github.io/new.html" class="menuitem">Create a new review</a></li>
+<li class="listitem"><a href="http://openmetaanalysis.github.io/update.html" class="menuitem">Improve/update an existing review</a></li>
 </ul>
 </nav>
 </div>
@@ -220,13 +228,26 @@ http://code.google.com/p/jquery-csv/wiki/API -> instructions
 
 <div>Methods are adapted from:</div>
 <ul>
-<li><a href="http://handbook.cochrane.org/">Cochrane Handbook</a></li>
+<li><a href="http://handbook-5-1.cochrane.org/">Cochrane Handbook</a></li>
 <li><a href="http://www.gradeworkinggroup.org/">GRADE Working Group</a>. openMetaAnalysis, similar to meta-analysis in general, focuses on the intial 4 - 6 steps of the GRADE process (see Box 1 at <a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC428525/">BMJ, 2006</a>).</li>
 <li><a href="http://www.bris.ac.uk/quadas/quadas-2/">QUADAS-2</a> (for meta-analyses of diagnostic tests)</li>
 <li><a href="http://www.prisma-statement.org/">PRISMA</a> Statement (PMID: <a href="http://pubmed.gov/19622512">19622512</a>) and Checklist. PRISMA items 7 - 11 are substantially affected by using open and continuous updating.</li>
 </ul>
 
+<div>Contents:</div>
+<ul>
+<li><a href="#study_selection">Selecton of studies</a></li>
+<li><a href="#searching">Searching for studies</a></li>
+<li><a href="#data_abstraction">Data abstraction</a> (including data imputing)</li>
+<li><a href="#quality_of_studies">Assessing quality of individual studies</a></li>
+<li><a href="#analysis">Statistical analysis</a></li>
+<li><a href="#quality_of_group_of_studies">Assessing quality across a group of studies</a></li>
+<li><a href="#sof">Summary of Findings</a></li>
+<li><a href="#reconciliation_tables">Reconciliation tables</a></li>
+</ul>
+
 <div>
+<a name="study_selection"/>
 <span style="font-weight:bold;font-size:130%">Selecton of studies</span>
 <span style="font-weight:bold"> (PRISMA Item 6)</span>
 </div>
@@ -246,36 +267,50 @@ http://code.google.com/p/jquery-csv/wiki/API -> instructions
 <div>We encourage reviews to have a Table of Reconciliation of Studies (<a href="https://github.com/openmetaanalysis/Early-goal-directed-therapy-for-septic-shock/tree/master/reconciliation%20of%20studies/">example</a>) that tabulates studies included by prior reviews and their status in the living review (Not part of PRISMA checklist). The has been advocated previously (PMID <a href="http://pubmed.gov25551377">25551377</a>).
 <div>&nbsp;</div>
 <div>
+<a name="searching"/>
 <span style="font-weight:bold;font-size:130%">Searching for studies</span>
 <span style="font-weight:bold"> (PRISMA Items 7,8)</span>
 </div>
-<p>Searching starts with identifying a recent meta-analysis. Additional trials may be identified by using PubMed and <a href="http://www.cochranelibrary.com/about/central-landing-page.html">Central</a>, as recommended by Royle (PMID <a href="http://pubmed.gov/16042789">16042789</a>), with additional cited references searches:</p>
-
-<ul>
-<li>Cited reference searches for studies that cite the recent systematic review or the highest impact study within the most recent meta-analysis. 
+<p>1. Start with making a reconciliation table of all studies included in at least one recent meta-analysis. (PMID <a href="https://pubmed.gov/27136216">27136216</a>)</p>
 	<ul>
-		<li><a href="http://isiknowledge.com">Web of Science</a></li>
-		<li><a href="http://scholar.google.com">Google Scholar</a></li>
+		<li>Identify up to 3-4 recent meta-analyses; place these in the columns a a table</li>
+		<li>List each trial in the rows of a spreadsheet.</li>
+		<li>In each cell, note whether a study was included or the reason it was not</li>
+		<li><a href="https://github.com/openMetaAnalysis/Early-goal-directed-therapy-for-septic-shock/tree/master/reconciliation-tables">Example of reconciliation tables</a></li>
 	</ul>
-</li>
-<li>Manual searches of online textbooks</li>
-<li><a href="http://www.ncbi.nlm.nih.gov/books/NBK3827/#pubmedhelp.Finding_articles_rel">PubMed's Find Related Data portlet</a></li>
-<li>Manual searches of PubMed</li>
-<li>For clinical trials
+	
+<p>2. Search for more recent studies with traditional searching using search terms</p>
 	<ul>
-		<li>Search of the <a href="http://www.cochranelibrary.com/">Cochrane Central Register of Controlled Trials (CENTRAL)</a></li>
-		<li>Clinical Trials registries with methods suggested by Glanville (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4076126/">PMC4076126</a>):
+		<li>Search PubMed with a 'Brief Search Strategy'(PMID <a href="http://pubmed.gov/16042789">16042789</a>)</li>
+		<li>Manual searches of online textbooks</li>
+		<li>For clinical trials
 			<ul>
-			<li><a href="https://clinicaltrials.gov/ct2/search/advanced">ClinicalTrials.gov</a> (for studies with completed results and the search term random*)</li>
-			<li><a href="http://apps.who.int/trialsearch/AdvSearch.aspx">International Clinical Trials Registry Platform (ICTRP)</a> (WHO)</li>
+				<li>Search of the <a href="http://www.cochranelibrary.com/">Cochrane Central Register of Controlled Trials (CENTRAL)</a></li>
+				<li>Clinical Trials registries with methods suggested by Glanville (<a href="http://www.ncbi.nlm.nih.gov/pmc/articles/PMC4076126/">PMC4076126</a>):
+					<ul>
+					<li><a href="https://clinicaltrials.gov/ct2/search/advanced">ClinicalTrials.gov</a> (for studies with completed results and the search term random*)</li>
+					<li><a href="http://apps.who.int/trialsearch/AdvSearch.aspx">International Clinical Trials Registry Platform (ICTRP)</a> (WHO)</li>
+					</ul>
+				</li>
 			</ul>
 		</li>
 	</ul>
-</ul>
+<p>3. Search for more recent studies with <a href="#" class="hastip" id="cited_references">cited reference searches</a></p>
+	<ul>
+		<li>Identify the seminal (most highly cite)d meta-analysis and original study by using <a href="http://scholar.google.com">Google Scholar</a> or <a href="http://isiknowledge.com">Web of Science</a> to retrieve the number of citations to each study on the reconciliaiton table. This work can be reduced by starting with studies in high impact journals. <a href="https://github.com/openMetaAnalysis/Procalcitonin-guided-antibiotics-for-severe-sepsis-and-septic-shock/issues/18">Example</a></li>
+		<li>Execute cited references searches with these studies alysis using <a href="http://scholar.google.com">Google Scholar</a> or <a href="http://isiknowledge.com">Web of Science</a> to retrieve the number of citations to each study on the reconciliaiton table. This work can be reduced by starting with studies in high impact journals.</li>
+	</ul>
+<p>4. Each time a study is identified at PubMed, look for addiitonal studies using <a href="http://www.ncbi.nlm.nih.gov/books/NBK3827/#pubmedhelp.Finding_articles_rel">PubMed's Find Related Data portlet</a></p>
 
-<p>Please add studies to repositories if you find qualifying trials that have not been included.</p>
+<p>If you find qualifying studies to an existing repository at openMetaAnalysis</p>
+	<ul>
+		<li>Please add the citation to the relevant: 1) data table, 2) PICO table, and 3) risk of bias table.</li>
+		<li>Update the relevant forest plot</li>
+		<li><i>Consider publishing the updated meta-analysis in a journal.</i></li>
+	</ul>
 
 <div>
+<a name="data_abstraction"/>
 <span style="font-weight:bold;font-size:130%">Data abstraction</span>
 
 <span style="font-weight:bold"> (PRISMA Items 9-11)</span>
@@ -310,16 +345,16 @@ http://code.google.com/p/jquery-csv/wiki/API -> instructions
 		<tr><td colspan="3" align="center"><input type="text" id="subjects" placeholder="Number subjects in group" style="width: 200px;" /></td></tr>
 		<tr><td colspan="3" align="center"><input id="ci" name="type2" class="type2" type="radio"><label for="ci">Confidence interval</label>&nbsp;<input id="iqr" name="type2" class="type2" type="radio"><label for="iqr">Interquartile range</label>&nbsp;<input id="range" name="type2" class="type3" type="radio"><label for="range">Range</label></td></tr>
 		<tr><td colspan="3"><button id="bttncalculate2">Calculate standard deviation</button> Mean: <span id="answer_mean"></span> SD: <span id="answer_sd"></span>
-			<div>Details from: <a href="http://pubmed.gov/15840177">mean to median</a>, <a href="http://pubmed.gov/11113947">confidence interval</a>, <a href="http://handbook.cochrane.org/chapter_7/7_7_3_5_mediansand_interquartile_ranges.htm">interquartile range</a>, and <a href="http://www.biomedcentral.com/1471-2288/5/13">range</a>.</div>
+			<div>Details from: <a href="http://pubmed.gov/25524443,15840177">mean to median</a>, <a href="http://pubmed.gov/11113947">confidence interval</a>, <a href="http://handbook-5-1.cochrane.org/chapter_7/7_7_3_5_mediansand_interquartile_ranges.htm">interquartile range</a>, and <a href="http://www.biomedcentral.com/1471-2288/5/13">range</a>. See downloadable spreadsheet for calculations by Wan, 2014 PMID <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4383202/">25524443</a></div>
 		</td></tr>
 	</table>
 </form>
 <form>
 	<table>
 		<caption>Converting continuous measures into binary measures</caption>
-		<tr><td colspan="2">Many calculators for data conversions are at <a href="http://www.campbellcollaboration.org/escalc/html/EffectSizeCalculator-SMD1.php">George Mason University</a>. Equations for conversion <a href="http://handbook.cochrane.org/chapter_9/9_4_6_combining_dichotomous_and_continuous_outcomes.htm">are available</a> at the Cochrane Handbook.</tr>
+		<tr><td colspan="2">Many calculators for data conversions are at <a href="http://www.campbellcollaboration.org/escalc/html/EffectSizeCalculator-SMD1.php">George Mason University</a>. Equations for conversion <a href="http://handbook-5-1.cochrane.org/chapter_9/9_4_6_combining_dichotomous_and_continuous_outcomes.htm">are available</a> at the Cochrane handbook-5-1.</tr>
 		<tr><td colspan="2" align="center"><input onclick="alert('Not implemented')" id="twosamples3" name="type2" class="type2" type="radio"><label for="twosamples3">Two group means</label>&nbsp;<input id="smd3" name="type2" class="type2" type="radio"><label for="smd3">Single difference between group means</label></td></tr>
-		<tr class="onedifference3"><td><input type="text" id="lower3" placeholder="CI lower limit"/></td><td><div></div><input type="text" id="upper3" placeholder="CI upper limit"/></div></td></tr>
+		<tr class="onedifference3"><td><input type="text" id="lower3" placeholder="CI lower limit"/></td><td><div></div><input type="text" id="upper3" placeholder="CI upper limit"/></td></tr>
 		<tr class="onedifference3"><td colspan="2" align="center"><input type="text" id="subjects3" placeholder="Number subjects in group" style="width: 200px;" />
 			<div><input type="text" id="meandiff3" placeholder="Mean difference" style="width: 200px;" /></div>
 		</td></tr>
@@ -330,30 +365,42 @@ http://code.google.com/p/jquery-csv/wiki/API -> instructions
 </form>
 </td></tr>
 </table>
-<div>Standardized mean differences may be abstracted. One proposed interpretration of the SMD is: (PMID <a href="http://pubmed.gov/19565683">19565683</a>)</div>
+
+<a name="SMD"/>
+<div><a href="http://handbook-5-1.cochrane.org/chapter_9/9_2_3_2_the_standardized_mean_difference.htm">Standardized mean differences</a> may be abstracted. One proposed interpretration of the SMD is: (PMID <a href="http://pubmed.gov/19565683">19565683</a>)</div>
 <ul>
 	<li>0.2 represents a small effect</li>    
 	<li>0.5 a moderate effect</li>
 	<li>0.8 a large effect</li>
 </ul>
-<div><span style="font-weight:bold;font-size:130%">Assessing quality of individual studies</span>
+
+<div>
+<a name="quality_of_studies"/>
+<span style="font-weight:bold;font-size:130%">Assessing quality of individual studies</span>
 <span style="font-weight:bold"> (PRISMA Items 12)</span>
 </div>
+
+		<div><a href="https://robot-reviewer.vortext.systems/">Robot Reviewer</a> can help you locate text in articles to make determinations of biases.</div>
 <ul>
 <li>Studies of intervention
 	<ul>
-	<li><a href="http://handbook.cochrane.org/chapter_8/table_8_5_d_criteria_for_judging_risk_of_bias_in_the_risk_of.htm">Individual criteria for judging risk of bias</a> in a trial using the '<a href="http://handbook.cochrane.org/chapter_8/8_5_the_cochrane_collaborations_tool_for_assessing_risk_of_bias.htm">Cochrane's Risk of bias tool</a>'.(1)
+	<li><a href="http://handbook-5-1.cochrane.org/chapter_8/table_8_5_d_criteria_for_judging_risk_of_bias_in_the_risk_of.htm">Individual criteria for judging risk of bias</a> in a trial using the '<a href="http://handbook-5-1.cochrane.org/chapter_8/8_5_the_cochrane_collaborations_tool_for_assessing_risk_of_bias.htm">Cochrane's Risk of bias tool</a>'.(1)
 		<ul>
 			<li>Attrition: consider judgment of 'Unclear risk" it no Consort flow diagram</li>
 			<li>Selective reporting: consider judgment of 'Unclear risk" it no access to original protocol at a online trial registry</li>
 		</ul>		
 	</li>
-	<li><a href="http://handbook.cochrane.org/chapter_8/table_8_7_a_possible_approach_for_summary_assessments_of_the.htm">Aggregating individual criteria into a summary judgment about a trial</a> (see column "Within a study")</li>
+	<li><a href="http://handbook-5-1.cochrane.org/chapter_8/table_8_7_a_possible_approach_for_summary_assessments_of_the.htm">Aggregating individual criteria into a summary judgment about a trial</a> (see column "Within a study")</li>
 	</ul>
 </li>
 <li>Studies of diagnostic accuracy
 	<ul>
 	<li><a href="http://www.bris.ac.uk/quadas/quadas-2/">Four criteria for judging risk of bias from QUADAS-2</a> (see Risk of bias row in the Table guided by the detailed criteria in the rows above)</li>
+	</ul>
+</li>
+<li>Studies of prognosis and risk factors
+	<ul>
+	<li>Cochrane's <a href="http://methods.cochrane.org/sites/methods.cochrane.org.prognosis/files/public/uploads/QUIPS tool.pdf">Quality In Prognosis Studies (QUIP) tool</a> (PMID <a href="https://pubmed.gov/23420236">23420236</a>)</li>
 	</ul>
 </li>
 <li>Conflict of interest
@@ -364,7 +411,9 @@ independently when and where they choose.". Thus, adding to selective reporting 
 </ul></li>
 </ul>
 
-<div><span style="font-weight:bold;font-size:130%">Statistical analysis</span>
+<div>
+<a name="analysis"/>
+<span style="font-weight:bold;font-size:130%">Statistical analysis</span>
 <span style="font-weight:bold"> (PRISMA Items 13 - 16)</span>
 </div>
 
@@ -375,7 +424,7 @@ independently when and where they choose.". Thus, adding to selective reporting 
 	<li>We use the random effects model with the inverse variance as implemented in the R package <a href="http://cran.r-project.org/web/packages/meta/">meta</a>.</li>
 	<li>The Knapp-Hartung method adjusts test statistics and confidence intervals to gives wider (more conservative) confidence intervals and is one of the methods suggested by Cornell et al.(PMID <a href="http://pubmed.gov/24727843">24727843</a>)</li>
 	<li>The continuity correction of Diamond is used.(PMID: <a href="http://pubmed.gov/17679700">17679700</a>)</li>
-	<li>Summary measures for binary outcomes include odds ratio and relative risk. Measures for continuous outcomes are either mean differences or <a href="http://handbook.cochrane.org/chapter_12/12_6_interpreting_results_from_continuous_outcomes_including.htm" class="hastip" id="smd_definition">standardized mean differences</a>.</li>
+	<li>Summary measures for binary outcomes include odds ratio and relative risk. Measures for continuous outcomes are either mean differences or <a href="http://handbook-5-1.cochrane.org/chapter_12/12_6_interpreting_results_from_continuous_outcomes_including.htm" class="hastip" id="smd_definition">standardized mean differences</a>.</li>
 	<li>Subgroup analyses and meta-regressions are done as needed with the R package <a href="http://cran.r-project.org/web/packages/meta/">meta</a>. This includes investigating correlation of the control rate with the outcome
 		<ul><li><a href="http://pubmed.gov/24339017,21908417,15358396,9777687?dopt=abstract">PubMed citations</a></li></ul>
 	</li>
@@ -390,15 +439,17 @@ independently when and where they choose.". Thus, adding to selective reporting 
 </ul>
 
 <div>
+<a name="quality_of_group_of_studies"/>
 <a id="user-content-assessing-quality-of-a-group-of-studies" class="anchor" href="#assessing-quality-of-a-group-of-studies" aria-hidden="true"><span class="octicon octicon-link"></span></a>
 <span style="font-weight:bold;font-size:130%">Assessing quality across a group of studies</span>
 <span style="font-weight:bold"> (PRISMA Items 15)</span>
 </div>
 
-<p><a href="http://handbook.cochrane.org/chapter_12/table_12_2_b_factors_that_may_decrease_the_quality_level_of_a.htm">Factors</a> developed by the <a href="http://www.gradeworkinggroup.org/">GRADE Working Group</a> are below for assessing a group of studies in a meta-analysis (PMID <a href="http://pubmed.gov/22542023">22542023</a>). (2) Specific criteria for each factor are are based on those used by the <a href="http://back.cochrane.org/">Cochrane Back Group</a> with modifications noted below.(PMID: <a href="http://pubmed.gov/23362516">23362516</a>)</p>
+<p><a href="http://handbook-5-1.cochrane.org/chapter_12/table_12_2_b_factors_that_may_decrease_the_quality_level_of_a.htm">Factors</a> developed by the <a href="http://www.gradeworkinggroup.org/">GRADE Working Group</a> are below for assessing a group of studies in a meta-analysis (PMID <a href="http://pubmed.gov/22542023">22542023</a>). (2) Specific criteria for each factor are are based on those used by the <a href="http://back.cochrane.org/">Cochrane Back Group</a> with modifications noted below.(PMID: <a href="http://pubmed.gov/23362516">23362516</a>)</p>
 
 <table>
-<tbody><tr>
+<tbody>
+<tr style="background-color:lightgray">
 <th>Factors</th>
 <th>Criteria</th>
 </tr>
@@ -412,7 +463,7 @@ independently when and where they choose.". Thus, adding to selective reporting 
 </tr>
 <tr>
 <td>Heterogeneity or inconsistency of results<br>(modified from the Cochrane Back Group)</td>
-<td>&bull; Serious heterogeneity: &gt;=75% of participants from studies with findings in the same direction or I<sup>2</sup> &gt;= 30%.(30% to 60% may represent moderate heterogeneity per <a href="http://handbook.cochrane.org/chapter_9/9_5_2_identifying_and_measuring_heterogeneity.htm">Identifying and measuring heterogeneity</a>)<br>&bull; Very serious heterogeneity: I<sup>2</sup> &gt;= 60% as 50% to 90%: may represent substantial heterogeneity.(3)</td>
+<td>&bull; Serious heterogeneity: &gt;=75% of participants from studies with findings in the same direction or I<sup>2</sup> &gt;= 30%.(30% to 60% may represent moderate heterogeneity per <a href="http://handbook-5-1.cochrane.org/chapter_9/9_5_2_identifying_and_measuring_heterogeneity.htm">Identifying and measuring heterogeneity</a>)<br>&bull; Very serious heterogeneity: I<sup>2</sup> &gt;= 60% as 50% to 90%: may represent substantial heterogeneity.(3)</td>
 </tr>
 <tr>
 <td>Imprecision of results<br>(modified from the Cochrane Back Group)</td>
@@ -422,7 +473,7 @@ independently when and where they choose.". Thus, adding to selective reporting 
 </tr>
 <tr>
 <td>Probability of publication bias</td>
-<td>This area of meta-analytic practice is evolving and presently only addresses studies of interventions. See discussion at <a href="http://handbook.cochrane.org/chapter_10/10_4_5_summary.htm">http://handbook.cochrane.org/chapter_10/10_4_5_summary.htm</a>.
+<td>This area of meta-analytic practice is evolving and presently only addresses studies of interventions. See discussion at <a href="http://handbook-5-1.cochrane.org/chapter_10/10_4_5_summary.htm">http://handbook-5-1.cochrane.org/chapter_10/10_4_5_summary.htm</a>.
 <ul>
 <li>If more than 10 studies are present, test for the small study effect with the Egger test for continuous outcomes or the Rucker test for binary outcomes (<a href="http://cran.r-project.org/web/packages/metasens/">CRAN</a> and PMIDs: <a href="http://pubmed.gov/17592831,19836925">17592831,19836925</a>).</li> 
 <li>When less than 10 studies are present, study size of less than 50 or 1000 patients total (PMID: <a href="http://pubmed.gov/23616031">23616031</a>) or 100 per arm (PMID: <a href="http://pubmed.gov/20639294">20639294</a>) in most of all available studies may suggest small study effect.</li>
@@ -445,29 +496,66 @@ independently when and where they choose.". Thus, adding to selective reporting 
 
 <div>&nbsp;</div>
 
-<div><span style="font-weight:bold;font-size:130%">Summary of Findings Table</span>
+<div>
+<a name="sof"/>
+<span style="font-weight:bold;font-size:130%">Summary of Findings</span>
 <span style="font-weight:bold"> (Not part of PRISMA checklist)</span>
 </div>
+<div>&nbsp;</div>
+<div>If pooled studies show significant benefit</div>
+<ul><li>Summary of Finding Tables (SoF) are constructed as detailed in the Cochrane Handbook (<a href="http://handbook-5-1.cochrane.org/chapter_11/11_5_summary_of_findings_tables.htm">Chapter 11</a>) and by Guyatt et al (PMID: <a href="http://pubmed.gov/21195583">21195583</a>). SoF are currently produced with <a href="http://tech.cochrane.org/revman/gradepro">GRADEpro</a>.</li></ul>
 
-Summary of Finding Tables (SoF) are detailed in the Cochrane Handbook (<a href="http://handbook.cochrane.org/chapter_11/11_5_summary_of_findings_tables.htm">Chapter 11</a>) and by Guyatt et al (PMID: <a href="http://pubmed.gov/21195583">21195583</a>). SoF are currently produced with <a href="http://tech.cochrane.org/revman/gradepro">GRADEpro</a>.
+<div>If pooled studies <i>do not</i> show significant benefit</div>
+<ul><li>Results are summarized based on p-values using judical analogies developed by Diamond (PMID <a href="http://pubmed.gov/19506168">19506168</a>).</ul>
+<table class="tg">
+  <tr style="background-color:lightgray">
+    <th>P values</th>
+    <th>Judicial analogy</th>
+  </tr>
+  <tr>
+    <td>P &lt; 0.05 in all studies</td>
+    <td>“Beyond a reasonable doubt”</td>
+  </tr>
+  <tr>
+    <td>P &lt; 0.05 in some studies</td>
+    <td>“Clear and convincing evidence”</td>
+  </tr>
+  <tr>
+    <td>P &lt; 0.5 in all studies</td>
+    <td>“Preponderance of the evidence”</td>
+  </tr>
+  <tr>
+    <td>P &lt; 0.5 in some studies</td>
+    <td>“Reasonable suspicion”</td>
+  </tr>
+  <tr>
+    <td>P &lt; 0.5 in no studies</td>
+    <td>“Insufficient evidence”</td>
+  </tr>
+   <tr>
+    <td colspan=2>Based on Diamond, 2009 (PMID <a href="http://pubmed.gov/19506168">19506168</a>)</td>
+  </tr>
+</table>
 
 <div>&nbsp;</div>
 
-<div><span style="font-weight:bold;font-size:130%">Reconciliation of Conclusions with prior meta-analyses</span>
+<div>
+<a name="reconciliation_tables"/>
+<span style="font-weight:bold;font-size:130%">Reconciliation of Conclusions with prior meta-analyses</span>
 <span style="font-weight:bold"> (Not part of PRISMA checklist)</span>
 </div>
-<div>The has been advocated (PMID <a href="http://pubmed.gov25551377">25551377</a>) and implemented (<a href="http://pubmed.gov/25796995">25796995</div>) previously.</div>
+<div>The has been advocated (PMID <a href="http://pubmed.gov25551377">25551377</a>) and implemented (<a href="http://pubmed.gov/25796995">25796995</a>) previously.</div>
 
-<div><a href="https://github.com/openMetaAnalysis/Early-goal-directed-therapy-for-septic-shock/blob/master/Reconciliation%20of%20conclusions.csv">example</a>.</div>
+<div><a href="https://github.com/openMetaAnalysis/Early-goal-directed-therapy-for-septic-shock/blob/master/Reconciliation%20of%20conclusions.csv">Example table</a>.</div>
 
 <div>&nbsp;</div>
 <h3>References</h3>
 <div>
 <ol class="task-list">
-<li><a href="http://handbook.cochrane.org/chapter_8/8_5_the_cochrane_collaborations_tool_for_assessing_risk_of_bias.htm">Risk of bias tool</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook.org">http://www.cochrane-handbook.org</a></li>
-<li><a href="http://handbook.cochrane.org/chapter_12/12_2_1_the_grade_approach.htm">The GRADE approach</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook.org">http://www.cochrane-handbook.org</a></li>
+<li><a href="http://handbook-5-1.cochrane.org/chapter_8/8_5_the_cochrane_collaborations_tool_for_assessing_risk_of_bias.htm">Risk of bias tool</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook-5-1.org">http://www.cochrane-handbook-5-1.org</a></li>
+<li><a href="http://handbook-5-1.cochrane.org/chapter_12/12_2_1_the_grade_approach.htm">The GRADE approach</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook-5-1.org">http://www.cochrane-handbook-5-1.org</a></li>
 <li>Schünemann H, Brożek J, Guyatt G, Oxman A (editors). <a href="http://www.guidelinedevelopment.org/handbook/">GRADE Handbook</a>. [updated October 2013]. Available from <a href="http://www.guidelinedevelopment.org/handbook/">http://www.guidelinedevelopment.org/handbook/</a></li>
-<li><a href="http://handbook.cochrane.org/chapter_9/9_5_2_identifying_and_measuring_heterogeneity.htm">Identifying and measuring heterogeneity</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook.org">http://www.cochrane-handbook.org</a></li>
+<li><a href="http://handbook-5-1.cochrane.org/chapter_9/9_5_2_identifying_and_measuring_heterogeneity.htm">Identifying and measuring heterogeneity</a>. In: Higgins JPT, Green S (editors). Cochrane Handbook for Systematic Reviews of Interventions Version 5.1.0 [updated March 2011]. The Cochrane Collaboration, 2011. Available from <a href="http://www.cochrane-handbook-5-1.org">http://www.cochrane-handbook-5-1.org</a></li>
 </ol>
 </div>
 

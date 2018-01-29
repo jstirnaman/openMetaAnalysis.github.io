@@ -2,7 +2,7 @@ $( document ).ajaxComplete(function() {
 	//Background-color of cells
 	});
 $(document).ready(function(){
-$("#header_pico").html("<p>Included trials, starting with the oldest trials.</p><table><caption>Randomized controlled trials of this topic</caption><tbody><tr><th>Trial</th><th>Patients</th><th>Intervention</th><th>Comparison</th><th>Outcome</th><th style='width:7px;background-color:white;border: 1px solid white'></th></tr></table>");
+$("#header_pico").html("<p>Included trials, starting with the oldest trials.</p><table><caption>Randomized controlled trials of this topic</caption><tbody><tr><th width=\'180px\'>Trial</th><th>Patients</th><th>Intervention</th><th>Comparison</th><th>Outcome</th><th style='width:7px;background-color:white;border: 1px solid white'></th></tr></table>");
 var url = "/" + repo_dir + "/tables/pico.xml";
         $.ajax({
             type: "GET",
@@ -28,7 +28,7 @@ var url = "/" + repo_dir + "/tables/pico.xml";
 						citationtext += "<a href='http://www.isrctn.com/" + $(this).find('citation').attr('trialregistration') + "'>" + $(this).find('citation').attr('trialregistration') + "</a><br>"
 						}
 					if ( $(this).find('citation').attr('trialregistration').toLowerCase().indexOf("actrn") >= 0){
-						citationtext += "<a href='http://www.anzctr.org.au/" + $(this).find('citation').attr('trialregistration') + "'>" + $(this).find('citation').attr('trialregistration') + "</a><br>"
+						citationtext += "<a href='http://www.anzctr.org.au/TrialSearch.aspx?searchTxt=" + $(this).find('citation').attr('trialregistration') + "'>" + $(this).find('citation').attr('trialregistration') + "</a><br>"
 						}
 					}
 				var patients = $(this).find('patients').attr('total') + ' subjects with ' + $(this).find('patients').find('description').text();
@@ -39,7 +39,7 @@ var url = "/" + repo_dir + "/tables/pico.xml";
 					$(this).find('intervention').find('bullet').each(function(){
 						intervention += '<br>&bull; ' + $(this).text()
 						})
-				intervention = $(this).find('intervention').find('bullet').remove().end().text() + intervention
+				intervention = $(this).find('intervention').find('bullet').remove().end().html() + intervention
 				var comparison = '';
 					$(this).find('comparison').find('bullet').each(function(){
 						comparison += '<br>&bull; ' + $(this).text()
@@ -64,7 +64,7 @@ var url = "/" + repo_dir + "/tables/pico.xml";
 						}
 					})
                         	var pmid= $(this).find('citation').attr('pmid');
-				var trHTML = '<tr><td>' +  citationtext + '</td><td>' + patients + '</td><td>' + intervention + '</td><td>' + comparison + '</td><td>' + outcome + '</td></tr>';
+				var trHTML = '<tr><td width=\'180px\'>' +  citationtext + '</td><td>' + patients + '</td><td>' + intervention + '</td><td>' + comparison + '</td><td>' + outcome + '</td></tr>';
 				//PubMed links
 				regex = /(\s{1,})(\d{7,})/ig; //from http://jsfiddle.net/badgettrg/60482cbh/
 				trHTML = trHTML.replace(regex, "$1<a href='http://pubmed.gov/$2'>$2</a>");
